@@ -1,0 +1,12 @@
+{
+    "manifest_version": 2,
+
+    "name": "Page autoreload",
+    "description": "Simple extension for Opera 15+. Adds context menu item \"Reload page every...\" with customizable intervals.",
+    "version": "0.1",
+    "background": {
+        "scripts": ["background.js"]
+    },
+
+    "permissions": ["contextMenus"]
+}
