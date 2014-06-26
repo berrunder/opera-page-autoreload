@@ -1,4 +1,10 @@
 {
+    "extensionName" : {
+        "message": "Page autoreload"
+    },
+    "extensionDescription": {
+        "message": "Simple extension for Opera 15+. Adds context menu item \"Reload page every...\" with customizable intervals."
+    },
     "parentMenu": {
         "message": "Reload every...",
         "description": "Parent menu title"
