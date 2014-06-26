@@ -9,6 +9,8 @@
         "scripts": ["scripts/background.js"],
         "persistent": false
     },
-
-    "permissions": ["contextMenus", "alarms", "storage"]
+    "permissions": ["contextMenus", "alarms", "storage"],
+    "icons": {
+        "16": "media/icon16.png"
+    }
 }
