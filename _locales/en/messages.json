@@ -11,5 +11,11 @@
     },
     "minute30": {
         "message": "30 minutes"
+    },
+    "shortMinute": {
+        "message": "min"
+    },
+    "stopReload": {
+        "message": "Don't reload"
     }
 }

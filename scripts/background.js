@@ -1,21 +1,21 @@
 chrome.tabs.onActivated.addListener(function(info) {
     var storage = chrome.storage.local;
-    storage.get(info.tabId, function(items) {
-        var tabId = info.tabId;
+    var tabId = info.tabId + '';
+    storage.get(tabId, function(items) {
         if (items[tabId]) {
             console.log('information about ' + tabId + 'found');
             rebuildMenu(items[tabId]);
         } else {
-            var newItems = {};
-            newItems[tabId] = 0;
-            storage.set(newItems);
+            var newItem = {};
+            newItem[tabId] = 0;
+            storage.set(newItem);
             rebuildMenu();
         }
     });
 });
 
 chrome.tabs.onRemoved.addListener(function(tabId) {
-    chrome.storage.local.remove(tabId);
+    chrome.storage.local.remove(tabId + '');
 });
 
 function rebuildMenu(interval) {
@@ -24,22 +24,38 @@ function rebuildMenu(interval) {
     });
 }
 
+var intervals = [1, 5, 30];
+
 function buildMenu(interval) {
     interval = interval || '0';
     chrome.contextMenus.create({
-        id: "autoReload",
+        id: 'autoReload',
         title: chrome.i18n.getMessage('parentMenu')
-    }, function() {
-
     });
 
-    var intervals = [1, 5, 30];
     intervals.forEach(function(val) {
         chrome.contextMenus.create({
             id: 'interval_' + val,
             parentId: 'autoReload',
             type: 'radio',
-            checked: (val == interval)
+            checked: (val == interval),
+            title: val + ' ' + chrome.i18n.getMessage('shortMinute')
         })
     });
+
+    chrome.contextMenus.create({
+        id: 'interval_0',
+        parentId: 'autoReload',
+        type: 'radio',
+        checked: (interval == '0'),
+        title: chrome.i18n.getMessage('stopReload')
+    });
 }
+
+chrome.contextMenus.onClicked.addListener(function(info, tab) {
+    if (info.menuItemId.indexOf('interval_') === 0 && !info.wasChecked) {
+        var newItem = {};
+        newItem[tab.id + ''] = info.menuItemId.split('_')[1];
+        chrome.storage.local.set(newItem);
+    }
+});
