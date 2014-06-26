@@ -15,6 +15,7 @@ chrome.tabs.onActivated.addListener(function(info) {
 
 chrome.tabs.onRemoved.addListener(function(tabId) {
     chrome.storage.local.remove(tabId + '');
+    chrome.alarms.clear(getAlarmName(tabId));
 });
 
 function rebuildMenu(interval) {
@@ -60,7 +61,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
         chrome.storage.local.set(newItem);
 
         // set alarm
-        var alarmName = 'alarm_' + tab.id;
+        var alarmName = getAlarmName(tab.id);
         chrome.alarms.clear(alarmName);
         if (newInterval > 0.1) {
             chrome.alarms.create(alarmName, {
@@ -71,10 +72,19 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     }
 });
 
+function getAlarmName(tabId) {
+    return 'alarm_' + tabId;
+}
+
 chrome.alarms.onAlarm.addListener(function(alarm) {
     var tabId = parseInt(alarm.name.split('_')[1]),
         now = new Date(),
         strTime = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
     console.log(strTime + ' - Reloading tab ' + tabId + ', period ' + alarm.periodInMinutes + ' minutes');
-    chrome.tabs.reload(tabId);
+    chrome.tabs.reload(tabId, function() {
+        if (chrome.extension.lastError) {
+            console.log("Error during reload: " + chrome.extension.lastError.message);
+            chrome.alarms.clear(alarm.name)
+        }
+    });
 });
