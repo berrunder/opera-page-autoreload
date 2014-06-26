@@ -3,7 +3,6 @@ chrome.tabs.onActivated.addListener(function(info) {
     var tabId = info.tabId + '';
     storage.get(tabId, function(items) {
         if (items[tabId]) {
-            console.log('information about ' + tabId + 'found');
             rebuildMenu(items[tabId]);
         } else {
             var newItem = {};
@@ -54,8 +53,28 @@ function buildMenu(interval) {
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId.indexOf('interval_') === 0 && !info.wasChecked) {
-        var newItem = {};
-        newItem[tab.id + ''] = info.menuItemId.split('_')[1];
+        // update reload time for tab
+        var newItem = {},
+            newInterval = parseFloat(info.menuItemId.split('_')[1]);
+        newItem[tab.id + ''] = newInterval;
         chrome.storage.local.set(newItem);
+
+        // set alarm
+        var alarmName = 'alarm_' + tab.id;
+        chrome.alarms.clear(alarmName);
+        if (newInterval > 0.1) {
+            chrome.alarms.create(alarmName, {
+                delayInMinutes: newInterval,
+                periodInMinutes: newInterval
+            })
+        }
     }
+});
+
+chrome.alarms.onAlarm.addListener(function(alarm) {
+    var tabId = parseInt(alarm.name.split('_')[1]),
+        now = new Date(),
+        strTime = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+    console.log(strTime + ' - Reloading tab ' + tabId + ', period ' + alarm.periodInMinutes + ' minutes');
+    chrome.tabs.reload(tabId);
 });
