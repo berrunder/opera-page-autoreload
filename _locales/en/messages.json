@@ -9,15 +9,6 @@
         "message": "Reload every...",
         "description": "Parent menu title"
     },
-    "minute1": {
-        "message": "1 minute"
-    },
-    "minute5": {
-        "message": "5 minutes"
-    },
-    "minute30": {
-        "message": "30 minutes"
-    },
     "shortMinute": {
         "message": "min"
     },

@@ -9,15 +9,6 @@
         "message": "Обновлять каждые...",
         "description": "Parent menu title"
     },
-    "minute1": {
-        "message": "1 минуту"
-    },
-    "minute5": {
-        "message": "5 минут"
-    },
-    "minute30": {
-        "message": "30 минут"
-    },
     "shortMinute": {
         "message": "мин."
     },
