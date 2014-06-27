@@ -24,7 +24,21 @@ function rebuildMenu(interval) {
     });
 }
 
-var intervals = [1, 5, 10, 30];
+function getIntervals(callback) {
+    var storage = chrome.storage.local;
+    storage.get('intervals', function(items) {
+        var intervals = items['intervals'];
+        if (!intervals || !Array.isArray(intervals)) {
+            intervals = [1, 5, 10, 15, 30, 60];
+            storage.set({ intervals: intervals });
+        }
+        if (typeof(callback) === 'function') {
+            callback(intervals);
+        } else {
+            console.log('Something gone wrong. Callback and intervals values was: ', callback, intervals);
+        }
+    });
+}
 
 function buildMenu(interval) {
     interval = interval || '0';
@@ -33,23 +47,25 @@ function buildMenu(interval) {
         title: chrome.i18n.getMessage('parentMenu')
     });
 
-    intervals.forEach(function(val) {
+    getIntervals(function(intervals) {
+        intervals.forEach(function(val) {
+            chrome.contextMenus.create({
+                id: 'interval_' + val,
+                parentId: 'autoReload',
+                type: 'radio',
+                checked: (val == interval),
+                title: val + ' ' + chrome.i18n.getMessage('shortMinute')
+            })
+        });
+
         chrome.contextMenus.create({
-            id: 'interval_' + val,
+            id: 'interval_0',
             parentId: 'autoReload',
             type: 'radio',
-            checked: (val == interval),
-            title: val + ' ' + chrome.i18n.getMessage('shortMinute')
-        })
-    });
-
-    chrome.contextMenus.create({
-        id: 'interval_0',
-        parentId: 'autoReload',
-        type: 'radio',
-        checked: (interval == '0'),
-        title: chrome.i18n.getMessage('stopReload')
-    });
+            checked: (interval == '0'),
+            title: chrome.i18n.getMessage('stopReload')
+        });
+    })
 }
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
@@ -83,7 +99,7 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
     console.log(strTime + ' - Reloading tab ' + tabId + ', period ' + alarm.periodInMinutes + ' minutes');
     chrome.tabs.reload(tabId, function() {
         if (chrome.extension.lastError) {
-            console.log('Error during reload: ' + chrome.extension.lastError.message);
+            console.log(strTime + '- Error during reload: ' + chrome.extension.lastError.message);
             console.log('Clearing alarm ' + alarm.name);
             chrome.alarms.clear(alarm.name)
         }
