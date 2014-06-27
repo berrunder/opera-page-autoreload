@@ -14,5 +14,17 @@
     },
     "stopReload": {
         "message": "Don't reload"
+    },
+    "optionsSaved": {
+        "message": "Options saved"
+    },
+    "intervalsLabel": {
+        "message": "Update intervals in minutes (separated by spaces)"
+    },
+    "inputHint": {
+        "message": "No more then 10 intervals"
+    },
+    "openOptions": {
+        "message": "Set intervals..."
     }
 }

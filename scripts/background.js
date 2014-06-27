@@ -25,7 +25,7 @@ function rebuildMenu(interval) {
 }
 
 function getIntervals(callback) {
-    var storage = chrome.storage.local;
+    var storage = chrome.storage.sync;
     storage.get('intervals', function(items) {
         var intervals = items['intervals'];
         if (!intervals || !Array.isArray(intervals)) {
@@ -65,6 +65,19 @@ function buildMenu(interval) {
             checked: (interval == '0'),
             title: chrome.i18n.getMessage('stopReload')
         });
+
+        chrome.contextMenus.create({
+            id: 'splitter',
+            'type': 'separator',
+            parentId: 'autoReload'
+        });
+
+        chrome.contextMenus.create({
+            id: 'openOptions',
+            title: chrome.i18n.getMessage('openOptions'),
+            type: 'normal',
+            parentId: 'autoReload'
+        });
     })
 }
 
@@ -85,6 +98,8 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
                 periodInMinutes: newInterval
             })
         }
+    } else if (info.menuItemId === 'openOptions') {
+        chrome.tabs.create({url: "options.html"});
     }
 });
 

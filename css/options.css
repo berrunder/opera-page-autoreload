@@ -1,0 +1,17 @@
+.center {
+    text-align: center;
+}
+
+#status {
+    font-style: italic;
+}
+
+#intervals {
+    height: 2em;
+    width: 20em;
+}
+
+#save {
+    height: 2.5em;
+    width: 10em;
+}

@@ -14,5 +14,17 @@
     },
     "stopReload": {
         "message": "Не обновлять автоматически"
+    },
+    "optionsSaved": {
+        "message": "Настройки сохранены"
+    },
+    "intervalsLabel": {
+        "message": "Интервалы обновления в минутах (через пробел)"
+    },
+    "inputHint": {
+        "message": "Не более 10 интервалов"
+    },
+    "openOptions": {
+        "message": "Настроить интервалы..."
     }
 }
