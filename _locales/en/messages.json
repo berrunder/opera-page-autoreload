@@ -26,5 +26,8 @@
     },
     "openOptions": {
         "message": "Set intervals..."
+    },
+    "shortHours": {
+        "message": "h"
     }
 }

@@ -26,5 +26,8 @@
     },
     "openOptions": {
         "message": "Настроить интервалы..."
+    },
+    "shortHours": {
+        "message": "ч."
     }
 }

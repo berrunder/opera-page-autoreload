@@ -49,12 +49,22 @@ function buildMenu(interval) {
 
     getIntervals(function(intervals) {
         intervals.forEach(function(val) {
+            var title;
+            if (val >= 60) {
+                title = Math.floor(val / 60) + ' ' + chrome.i18n.getMessage('shortHours');
+                if (val % 60 > 0.016) {
+                    title += ' '+ (val % 60) + ' ' + chrome.i18n.getMessage('shortMinute');
+                }
+            } else {
+                title = val + ' ' + chrome.i18n.getMessage('shortMinute');
+            }
+
             chrome.contextMenus.create({
                 id: 'interval_' + val,
                 parentId: 'autoReload',
                 type: 'radio',
                 checked: (val == interval),
-                title: val + ' ' + chrome.i18n.getMessage('shortMinute')
+                title: title
             })
         });
 
