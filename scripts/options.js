@@ -5,17 +5,20 @@ var defaultIntervals = [1, 5, 10, 15, 30, 60],
 // Saves options to chrome.storage
 function saveOptions(event) {
     event.preventDefault();
-    var intervals = document.getElementById('intervals')
+    var intervalsEl = document.getElementById('intervals');
+    var intervals = intervalsEl
         .value
         .split(/\s+/)
         .map(function(item) {
-            return parseFloat((item + '').replace(',', '.'));
+            var interval = parseFloat((item + '').replace(',', '.'));
+            // chrome alarms doesn't support intervals lesser then 1 minute
+            return (interval > 1.0 || isNaN(interval)) ? interval: 1.0;
         })
         .filter(function(item) {
             return !!item && item < maxInterval;
         })
         .filter(onlyUnique)
-        .slice(0, 9);
+        .slice(0, 10);
 
     if (intervals.length > 0) {
         chrome.storage.sync.set({
@@ -27,6 +30,8 @@ function saveOptions(event) {
             setTimeout(function () {
                 status.textContent = '';
             }, 1000);
+
+            intervalsEl.value = intervals.join(' ');
         });
     }
 }
