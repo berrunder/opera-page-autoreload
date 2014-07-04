@@ -29,5 +29,8 @@
     },
     "shortHours": {
         "message": "h"
+    },
+    "btnSave": {
+        "message": "Save"
     }
 }

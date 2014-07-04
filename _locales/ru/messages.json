@@ -29,5 +29,8 @@
     },
     "shortHours": {
         "message": "ч."
+    },
+    "btnSave": {
+        "message": "Сохранить"
     }
 }
