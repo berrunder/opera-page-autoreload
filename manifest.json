@@ -11,9 +11,10 @@
     },
     "permissions": ["contextMenus", "alarms", "storage", "tabs"],
     "icons": {
-        "16": "media/icon16.png",
-        "48": "media/icon48.png",
-        "128": "media/icon128.png"
+        "16": "media/icon16_clock.png",
+        "48": "media/icon48_clock.png",
+        "64": "media/icon64_clock.png",
+        "128": "media/icon128_clock.png"
     },
     "options_page": "options.html"
 }
