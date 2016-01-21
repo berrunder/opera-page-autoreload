@@ -1,5 +1,5 @@
 {
-    "extensionName" : {
+    "extensionName": {
         "message": "Page autoreload"
     },
     "extensionDescription": {
@@ -33,3 +33,4 @@
     "btnSave": {
         "message": "Сачувај"
     }
+}
