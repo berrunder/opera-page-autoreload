@@ -1,0 +1,35 @@
+{
+    "extensionName" : {
+        "message": "Page autoreload"
+    },
+    "extensionDescription": {
+        "message": "Додаје ставку у контекстном менију \"Освежи сваких...\" са прилагодљивим интервалима за аутоматско освежавање страница."
+    },
+    "parentMenu": {
+        "message": "Освежи сваких...",
+        "description": "Parent menu title"
+    },
+    "shortMinute": {
+        "message": "мин"
+    },
+    "stopReload": {
+        "message": "Не освежавај аутоматски"
+    },
+    "optionsSaved": {
+        "message": "Подешавања су сачувана"
+    },
+    "intervalsLabel": {
+        "message": "Интервали освежавања у минутима (одвоји размацима)"
+    },
+    "inputHint": {
+        "message": "Не више од 10 интервала"
+    },
+    "openOptions": {
+        "message": "Подеси интервале..."
+    },
+    "shortHours": {
+        "message": "ч."
+    },
+    "btnSave": {
+        "message": "Сачувај"
+    }
